@@ -4,22 +4,31 @@ import java.util.TimerTask;
 class TimerTracker {
     private final Timer myTimer = new Timer();
 
-    public final int STEP = 250;
+    private TimerOutput output;
+
+    private int step;
     private long time;
+
+    public TimerTracker(TimerOutput output, int step) {
+        this.output = output;
+        this.step = step;
+    }
 
     public void countDown(long length) {
 
-        time = length;
+        time = length - length%step;
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                time-=STEP;
-                System.out.println(time);
-                if (time > 0) return;
+                output.update(time,length);
+                if (time > 0) {
+                    time-=step;
+                    return;
+                }
                 myTimer.cancel();
-                System.out.println("BEEP BEEP BEEP");
+                output.finish();
             }
         };
-        myTimer.scheduleAtFixedRate(task, STEP, STEP);
+        myTimer.scheduleAtFixedRate(task, length % step, step);
     }
 }
