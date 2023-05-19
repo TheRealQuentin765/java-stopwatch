@@ -9,15 +9,12 @@ public class Main {
             @Override
             public void finish() {
                 System.out.println("BEEP BEEP BEEP");
+                Beeper.beep();
             }
         };
 
 
-        TimerTracker core = new TimerTracker(output,250);
-        core.countDown(12345);
-
-        GUI stopGUI = new GUI();
-        stopGUI.stopWatchGUI();
-
+        TimerTracker core = new TimerTracker(output,123);
+        core.countDown(1234);
     }
 }
