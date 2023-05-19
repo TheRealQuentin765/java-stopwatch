@@ -23,16 +23,17 @@ class TimerTracker {
                 output.update(time,length);
                 if (time > 0) {
                     time-=step;
+                    time = Math.max(time,0);
                     return;
                 }
                 myTimer.cancel();
-                output.finish();
+                if (time == 0) output.finish();
             }
         };
         myTimer.scheduleAtFixedRate(task, length % step, step);
     }
 
     public void stop(){
-        time = 0;
+        time = -1;
     }
 }
