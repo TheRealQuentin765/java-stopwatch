@@ -16,5 +16,9 @@ public class Main {
 
         TimerTracker core = new TimerTracker(output,123);
         core.countDown(1234);
+
+        GUI stopGUI = new GUI();
+        stopGUI.stopWatchGUI();
+
     }
 }
