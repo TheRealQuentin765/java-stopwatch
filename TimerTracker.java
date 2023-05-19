@@ -31,4 +31,8 @@ class TimerTracker {
         };
         myTimer.scheduleAtFixedRate(task, length % step, step);
     }
+
+    public void stop(){
+        time = 0;
+    }
 }
