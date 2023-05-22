@@ -10,9 +10,11 @@ public class GUI implements ActionListener,TimerOutput{
     JPanel panel = new JPanel();
     JPanel panel2 = new JPanel();
     JPanel panel3 = new JPanel();
+    JPanel panel4 = new JPanel();
     JLabel label = new JLabel("Enter time below, then press Start");
     JButton button = new JButton("Start");
-    JTextField textField= new JTextField("30");
+    JTextField textField = new JTextField("30");
+    JTextField noteField = new JTextField("Enter Note Here");
     public void stopWatchGUI(){
         frame.setLayout(new BorderLayout());
         panel.add(label);
@@ -22,12 +24,15 @@ public class GUI implements ActionListener,TimerOutput{
         button.addActionListener(this);
         panel3.add(textField);
         panel3.add(button);
+        textField.setColumns(5);
 
+        panel4.add(noteField);
 
         panel.setPreferredSize(new Dimension(100,50));
         panel2.setPreferredSize(new Dimension(100,100));
         frame.add(panel3,BorderLayout.SOUTH);
         frame.add(panel2,BorderLayout.NORTH);
+        frame.add(panel4,BorderLayout.SOUTH);
         frame.add(panel,BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);
