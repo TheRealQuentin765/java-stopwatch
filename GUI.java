@@ -36,11 +36,12 @@ public class GUI implements ActionListener,TimerOutput{
 
     }
     public void update(long current, long length) {
-        label.setText(100 - 100. * current / length + "%");
+        label.setText(current/1000. + " / " + length/1000. + "  (" + (100 - 100. * current / length) + "%)");
     }
 
     public void finish() {
-        label.setText("BEEP BEEP BEEP");
+        label.setText("BEEP");
+        Beeper.beep();
     }
 
     public void actionPerformed(ActionEvent e){
