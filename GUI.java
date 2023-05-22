@@ -6,14 +6,13 @@ import java.awt.event.ActionListener;
 public class GUI implements ActionListener,TimerOutput{
     public GUI() {
     }
-    int count = 60;
     JFrame frame = new JFrame("StopWatch");
     JPanel panel = new JPanel();
     JPanel panel2 = new JPanel();
     JPanel panel3 = new JPanel();
-    JLabel label = new JLabel("" + count);
-    JButton button = new JButton("Count");
-    JTextField textField= new JTextField("Time");
+    JLabel label = new JLabel("Enter time below, then press Start");
+    JButton button = new JButton("Start");
+    JTextField textField= new JTextField("30");
     public void stopWatchGUI(){
         frame.setLayout(new BorderLayout());
         panel.add(label);
@@ -36,7 +35,7 @@ public class GUI implements ActionListener,TimerOutput{
 
     }
     public void update(long current, long length) {
-        label.setText(current/1000. + " / " + length/1000. + "  (" + (100 - 100. * current / length) + "%)");
+        label.setText(current/1000. + " / " + length/1000. + "  (" + (int)(100 - 100. * current / length) + "%)");
     }
 
     public void finish() {
@@ -46,7 +45,6 @@ public class GUI implements ActionListener,TimerOutput{
 
     public void actionPerformed(ActionEvent e){
         TimerTracker timer = new TimerTracker(this,250);
-        timer.countDown(Long.parseLong(textField.getText()));
+        timer.countDown((long)(Double.parseDouble(textField.getText())*1000));
     }
-
 }
