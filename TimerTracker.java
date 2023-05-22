@@ -20,17 +20,22 @@ class TimerTracker {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                output.update(time,length);
                 if (time > 0) {
+                    output.update(time,length);
                     time-=step;
                     time = Math.max(time,0);
                     return;
                 }
                 myTimer.cancel();
+                myTimer.purge();
                 if (time == 0) output.finish();
             }
         };
         myTimer.scheduleAtFixedRate(task, length % step, step);
+    }
+
+    public long getTime() {
+        return time;
     }
 
     public void stop(){

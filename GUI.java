@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GUI implements ActionListener,TimerOutput{
-    public GUI() {
-    }
     JFrame frame = new JFrame("StopWatch");
     JPanel panel = new JPanel();
     JPanel panel2 = new JPanel();
@@ -15,6 +13,8 @@ public class GUI implements ActionListener,TimerOutput{
     JButton button = new JButton("Start");
     JTextField textField = new JTextField("30");
     JTextField noteField = new JTextField("Enter Note Here");
+
+    TimerTracker timer;
     public void stopWatchGUI(){
         frame.setLayout(new BorderLayout());
         panel.add(label);
@@ -32,7 +32,7 @@ public class GUI implements ActionListener,TimerOutput{
         panel2.setPreferredSize(new Dimension(100,100));
         frame.add(panel3,BorderLayout.SOUTH);
         frame.add(panel2,BorderLayout.NORTH);
-        frame.add(panel4,BorderLayout.SOUTH);
+        frame.add(panel4,BorderLayout.NORTH);
         frame.add(panel,BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);
@@ -46,10 +46,20 @@ public class GUI implements ActionListener,TimerOutput{
     public void finish() {
         label.setText("BEEP");
         Beeper.beep();
+        button.setText("Start");
+        timer = null;
     }
 
     public void actionPerformed(ActionEvent e){
-        TimerTracker timer = new TimerTracker(this,250);
-        timer.countDown((long)(Double.parseDouble(textField.getText())*1000));
+        if (timer == null) {
+            timer = new TimerTracker(this,250);
+            timer.countDown((long)(Double.parseDouble(textField.getText())*1000));
+            button.setText("Stop");
+        } else {
+            label.setText("Stopped with " + timer.getTime()/1000. + " left.");
+            timer.stop();
+            timer = null;
+            button.setText("Start");
+        }
     }
 }
