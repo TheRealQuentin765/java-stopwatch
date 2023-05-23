@@ -4,16 +4,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GUI implements ActionListener,TimerOutput{
-    public GUI() {
-    }
-    int count = 60;
     JFrame frame = new JFrame("StopWatch");
     JPanel panel = new JPanel();
     JPanel panel2 = new JPanel();
     JPanel panel3 = new JPanel();
-    JLabel label = new JLabel("" + count);
-    JButton button = new JButton("Count");
-    JTextField textField= new JTextField("Time");
+    JPanel panel4 = new JPanel();
+    JLabel label = new JLabel("Enter time below, then press Start");
+    JButton button = new JButton("Start");
+    JTextField textField = new JTextField("30");
+    JTextField noteField = new JTextField("Enter Note Here");
+
+    TimerTracker timer;
     public void stopWatchGUI(){
         frame.setLayout(new BorderLayout());
         panel.add(label);
@@ -23,12 +24,15 @@ public class GUI implements ActionListener,TimerOutput{
         button.addActionListener(this);
         panel3.add(textField);
         panel3.add(button);
+        textField.setColumns(5);
 
+        panel4.add(noteField);
 
         panel.setPreferredSize(new Dimension(100,50));
         panel2.setPreferredSize(new Dimension(100,100));
         frame.add(panel3,BorderLayout.SOUTH);
         frame.add(panel2,BorderLayout.NORTH);
+        frame.add(panel4,BorderLayout.NORTH);
         frame.add(panel,BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);
@@ -36,16 +40,26 @@ public class GUI implements ActionListener,TimerOutput{
 
     }
     public void update(long current, long length) {
-        label.setText(100 - 100. * current / length + "%");
+        label.setText(current/1000. + " / " + length/1000. + "  (" + (int)(100 - 100. * current / length) + "%)");
     }
 
     public void finish() {
-        label.setText("BEEP BEEP BEEP");
+        label.setText("BEEP");
+        Beeper.beep();
+        button.setText("Start");
+        timer = null;
     }
 
     public void actionPerformed(ActionEvent e){
-        TimerTracker timer = new TimerTracker(this,250);
-        timer.countDown(Long.parseLong(textField.getText()));
+        if (timer == null) {
+            timer = new TimerTracker(this,250);
+            timer.countDown((long)(Double.parseDouble(textField.getText())*1000));
+            button.setText("Stop");
+        } else {
+            label.setText("Stopped with " + timer.getTime()/1000. + " left.");
+            timer.stop();
+            timer = null;
+            button.setText("Start");
+        }
     }
-
 }
