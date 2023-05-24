@@ -62,4 +62,5 @@ public class GUI implements ActionListener,TimerOutput{
             button.setText("Start");
         }
     }
+
 }
