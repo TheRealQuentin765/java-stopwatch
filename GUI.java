@@ -1,9 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
-public class GUI implements ActionListener,TimerOutput{
+public class GUI implements ActionListener,TimerOutput,ItemListener{
     JFrame frame = new JFrame("StopWatch");
     JPanel panel = new JPanel();
     JPanel panel2 = new JPanel();
@@ -13,7 +12,8 @@ public class GUI implements ActionListener,TimerOutput{
     JButton button = new JButton("Start");
     JTextField textField = new JTextField("30");
     JTextField noteField = new JTextField("Enter Note Here");
-
+    JCheckBox muteButton = new JCheckBox("Mute");
+    boolean muted = false;
     TimerTracker timer;
     public void stopWatchGUI(){
         frame.setLayout(new BorderLayout());
@@ -24,6 +24,8 @@ public class GUI implements ActionListener,TimerOutput{
         button.addActionListener(this);
         panel3.add(textField);
         panel3.add(button);
+        muteButton.addItemListener(this);
+        panel3.add(muteButton);
         textField.setColumns(5);
 
         panel4.add(noteField);
@@ -45,7 +47,7 @@ public class GUI implements ActionListener,TimerOutput{
 
     public void finish() {
         label.setText("BEEP");
-        Beeper.beep();
+        if(!muted) Beeper.beep();
         button.setText("Start");
         timer = null;
     }
@@ -61,5 +63,10 @@ public class GUI implements ActionListener,TimerOutput{
             timer = null;
             button.setText("Start");
         }
+    }
+
+
+    public void itemStateChanged(ItemEvent e) {
+        muted = e.getStateChange() == ItemEvent.SELECTED;
     }
 }
