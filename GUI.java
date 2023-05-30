@@ -41,8 +41,12 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
     }
-    public void update(long current, long length) {
+    public void updateTimer(long current, long length) {
         label.setText(current/1000. + " / " + length/1000. + "  (" + (int)(100 - 100. * current / length) + "%)");
+    }
+
+    public void updateStopWatch(long current) {
+        label.setText(current/1000. + "");
     }
 
     public void finish() {
