@@ -1,4 +1,5 @@
 public interface TimerOutput {
-    public void update(long current, long length);
-    public void finish();
+    void updateTimer(long current, long length);
+    void updateStopWatch(long current);
+    void finish();
 }
