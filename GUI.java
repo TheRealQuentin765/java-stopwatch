@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GUI implements ActionListener,TimerOutput{
-    JFrame frame = new JFrame("StopWatch");
+    JFrame frame = new JFrame("Timer");
     JPanel panel = new JPanel();
     JLabel label = new JLabel("Enter time below");
     JButton button = new JButton("Start");
