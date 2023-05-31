@@ -17,7 +17,7 @@ class TimerTracker {
 
     public void countUp() {
         stop = false;
-        time = 0;
+        time = step;
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -26,9 +26,7 @@ class TimerTracker {
                     myTimer.purge();
                     return;
                 }
-                if (time > 0) {
-                    time+=step;
-                }
+                time+=step;
                 output.updateStopWatch(time);
             }
         };
