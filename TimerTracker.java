@@ -4,9 +4,9 @@ import java.util.TimerTask;
 class TimerTracker {
     private final Timer myTimer = new Timer();
 
-    private TimerOutput output;
+    final private TimerOutput output;
 
-    private int step;
+    final private int step;
     private long time;
     private boolean stop;
 
@@ -18,6 +18,7 @@ class TimerTracker {
     public void countUp() {
         stop = false;
         time = step;
+        output.updateStopWatch(0);
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -37,6 +38,7 @@ class TimerTracker {
     public void countDown(long length) {
         stop = false;
         time = length - length%step;
+        output.updateTimer(0,length);
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
