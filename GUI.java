@@ -1,42 +1,48 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class GUI implements ActionListener,TimerOutput,ItemListener{
-    JFrame frame = new JFrame("StopWatch");
+    JFrame frame = new JFrame("Timer");
     JPanel panel = new JPanel();
-    JPanel panel2 = new JPanel();
-    JPanel panel3 = new JPanel();
-    JPanel panel4 = new JPanel();
-    JLabel label = new JLabel("Enter time below, then press Start");
+    JLabel label = new JLabel("Enter time below");
     JButton button = new JButton("Start");
     JTextField textField = new JTextField("30");
-    JTextField noteField = new JTextField("Enter Note Here");
+    JTextField noteField = new JTextField("Note");
     JCheckBox muteButton = new JCheckBox("Mute");
+    JLabel jMute = new JLabel("Mute");
     boolean muted = false;
+
     TimerTracker timer;
     public void stopWatchGUI(){
-        frame.setLayout(new BorderLayout());
+
+        panel.setLayout(null);
+
+        frame.setBounds(100,100,200,200);
+        noteField.setBounds(50,0,100,40);
+        label.setFont(label.getFont().deriveFont((float)12));
+        label.setBounds(50,50,200,40);
+        button.setBounds(60,90,100,30);
+        textField.setBounds(20,90,textField.getPreferredSize().width,textField.getPreferredSize().height);
+        muteButton.setBounds(20,135,30,20);
+        jMute.setBounds(20,120,60,20);
+
+        panel.add(jMute);
         panel.add(label);
-        frame.setBounds(100,100,500,500);
-
-
         button.addActionListener(this);
-        panel3.add(textField);
-        panel3.add(button);
+        noteField.addActionListener(this);
+        panel.add(button);
+        panel.add(textField);
+        panel.add(button);
+        panel.add(muteButton);
         muteButton.addItemListener(this);
-        panel3.add(muteButton);
-        textField.setColumns(5);
 
-        panel4.add(noteField);
-
-        panel.setPreferredSize(new Dimension(100,50));
-        panel2.setPreferredSize(new Dimension(100,100));
-        frame.add(panel3,BorderLayout.SOUTH);
-        frame.add(panel2,BorderLayout.NORTH);
-        frame.add(panel4,BorderLayout.NORTH);
-        frame.add(panel,BorderLayout.CENTER);
-        frame.pack();
+        panel.add(noteField);
+        frame.setResizable(false);
+        frame.setContentPane(panel);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,18 +63,23 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     }
 
     public void actionPerformed(ActionEvent e){
-        if (timer == null) {
-            timer = new TimerTracker(this,250);
-            timer.countDown((long)(Double.parseDouble(textField.getText())*1000));
-            button.setText("Stop");
-        } else {
-            label.setText("Stopped with " + timer.getTime()/1000. + " left.");
-            timer.stop();
-            timer = null;
-            button.setText("Start");
+        if(e.getSource() == noteField) {
+            frame.setTitle(noteField.getText());
+            noteField.setVisible(false);
+        }else {
+
+            if (timer == null) {
+                timer = new TimerTracker(this, 250);
+                timer.countDown((long) (Double.parseDouble(textField.getText()) * 1000));
+                button.setText("Stop");
+            } else {
+                label.setText("Stopped with " + timer.getTime() / 1000. + " left.");
+                timer.stop();
+                timer = null;
+                button.setText("Start");
+            }
         }
     }
-
 
     public void itemStateChanged(ItemEvent e) {
         muted = e.getStateChange() == ItemEvent.SELECTED;
