@@ -24,6 +24,7 @@ class TimerTracker {
                 if (stop) {
                     myTimer.cancel();
                     myTimer.purge();
+                    return;
                 }
                 if (time > 0) {
                     time+=step;
@@ -44,6 +45,7 @@ class TimerTracker {
                 if (stop) {
                     myTimer.cancel();
                     myTimer.purge();
+                    return;
                 }
                 if (time > 0) {
                     output.updateTimer(time,length);
