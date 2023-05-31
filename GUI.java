@@ -3,8 +3,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
-public class GUI implements ActionListener,TimerOutput{
+public class GUI implements ActionListener,TimerOutput,ItemListener{
     JFrame frame = new JFrame("Timer");
     JPanel panel = new JPanel();
     JLabel label = new JLabel("Enter time below");
@@ -12,6 +13,7 @@ public class GUI implements ActionListener,TimerOutput{
     JTextField textField = new JTextField("30");
     JTextField noteField = new JTextField("Note");
     JCheckBox muteButton = new JCheckBox("Mute");
+    JLabel jMute = new JLabel("Mute");
     boolean muted = false;
 
     TimerTracker timer;
@@ -25,7 +27,10 @@ public class GUI implements ActionListener,TimerOutput{
         label.setBounds(50,50,200,40);
         button.setBounds(60,90,100,30);
         textField.setBounds(20,90,textField.getPreferredSize().width,textField.getPreferredSize().height);
+        muteButton.setBounds(20,135,30,20);
+        jMute.setBounds(20,120,60,20);
 
+        panel.add(jMute);
         panel.add(label);
         button.addActionListener(this);
         noteField.addActionListener(this);
@@ -34,7 +39,6 @@ public class GUI implements ActionListener,TimerOutput{
         panel.add(button);
         panel.add(muteButton);
         muteButton.addItemListener(this);
-//        textField.setColumns(5);
 
         panel.add(noteField);
         frame.setResizable(false);
