@@ -32,7 +32,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
         muteButton.setBounds(20,135,30,20);
         jMute.setBounds(20,120,60,20);
         stopWatchButton.setBounds(60,130,100,30);
-        progressBar.setBounds(25,60,150,40);
+        progressBar.setBounds(25,65,150,10);
 
         panel.add(progressBar);
         panel.add(stopWatchButton);
@@ -86,10 +86,12 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
                 muteButton.setVisible(false);
                 textField.setVisible(false);
                 jMute.setVisible(false);
+                progressBar.setVisible(false);
             }
         } else {
             if (timer == null) {
                 start();
+                progressBar.setVisible(true);
                 timer.countDown((long) (Double.parseDouble(textField.getText()) * 1000));
             } else {
                 label.setText("Stopped with " + timer.getTime() / 1000. + ".");
