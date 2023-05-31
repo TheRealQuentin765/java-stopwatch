@@ -9,7 +9,8 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     JFrame frame = new JFrame("Timer");
     JPanel panel = new JPanel();
     JLabel label = new JLabel("Enter time below");
-    JButton button = new JButton("Start");
+    JButton button = new JButton("Timer Start");
+    JButton stopWatchButton = new JButton("StopWatch");
     JTextField textField = new JTextField("30");
     JTextField noteField = new JTextField("Note");
     JCheckBox muteButton = new JCheckBox("Mute");
@@ -24,16 +25,20 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
         frame.setBounds(100,100,200,200);
         noteField.setBounds(50,0,100,40);
         label.setFont(label.getFont().deriveFont((float)12));
+        stopWatchButton.setFont(label.getFont().deriveFont((float)12));
         label.setBounds(50,50,200,40);
         button.setBounds(60,90,100,30);
         textField.setBounds(20,90,textField.getPreferredSize().width,textField.getPreferredSize().height);
         muteButton.setBounds(20,135,30,20);
         jMute.setBounds(20,120,60,20);
+        stopWatchButton.setBounds(60,130,100,30);
 
+        panel.add(stopWatchButton);
         panel.add(jMute);
         panel.add(label);
         button.addActionListener(this);
         noteField.addActionListener(this);
+        stopWatchButton.addActionListener(this);
         panel.add(button);
         panel.add(textField);
         panel.add(button);
@@ -66,7 +71,11 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
         if(e.getSource() == noteField) {
             frame.setTitle(noteField.getText());
             noteField.setVisible(false);
-        }else {
+        }
+        if(e.getSource() == stopWatchButton){
+            //Stopwatch code goes here
+        }
+        else {
 
             if (timer == null) {
                 timer = new TimerTracker(this, 250);
