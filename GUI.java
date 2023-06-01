@@ -1,16 +1,15 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 public class GUI implements ActionListener,TimerOutput,ItemListener{
-    JFrame frame = new JFrame("Timer");
+    JFrame frame = new JFrame("Stopwatch++");
     JPanel panel = new JPanel();
     JLabel label = new JLabel("Enter time below");
-    JButton button = new JButton("Timer Start");
-    JButton stopWatchButton = new JButton("StopWatch");
+    JButton button = new JButton("Timer");
+    JButton stopWatchButton = new JButton("Stopwatch");
     JTextField textField = new JTextField("30");
     JTextField noteField = new JTextField("Note");
     JCheckBox muteButton = new JCheckBox("Mute");
@@ -33,7 +32,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
         muteButton.setBounds(20,135,30,20);
         jMute.setBounds(20,120,60,20);
         stopWatchButton.setBounds(60,130,100,30);
-        progressBar.setBounds(25,60,150,40);
+        progressBar.setBounds(25,65,150,10);
 
         panel.add(progressBar);
         panel.add(stopWatchButton);
@@ -63,38 +62,58 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     }
 
     public void updateStopWatch(long current) {
-        label.setText(current/1000. + "");
+        if (current == 1000)
+            label.setText(current/1000. + " second");
+        else
+            label.setText(current/1000. + " seconds");
     }
 
     public void finish() {
         progressBar.setValue(100);
         label.setText("BEEP");
         if(!muted) Beeper.beep();
-        button.setText("Start");
-        timer = null;
+        end();
     }
 
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == noteField) {
             frame.setTitle(noteField.getText());
             noteField.setVisible(false);
-        }
-        if(e.getSource() == stopWatchButton){
-            //Stopwatch code goes here
-        }
-        else {
-
+        } else if(e.getSource() == stopWatchButton){
             if (timer == null) {
-                timer = new TimerTracker(this, 250);
+                start();
+                timer.countUp();
+                muteButton.setVisible(false);
+                textField.setVisible(false);
+                jMute.setVisible(false);
+                progressBar.setVisible(false);
+            }
+        } else {
+            if (timer == null) {
+                start();
+                progressBar.setVisible(true);
                 timer.countDown((long) (Double.parseDouble(textField.getText()) * 1000));
-                button.setText("Stop");
             } else {
-                label.setText("Stopped with " + timer.getTime() / 1000. + " left.");
-                timer.stop();
-                timer = null;
-                button.setText("Start");
+                label.setText("Stopped with " + timer.getTime() / 1000. + ".");
+                end();
             }
         }
+    }
+
+    private void end() {
+        button.setText("Timer");
+        stopWatchButton.setVisible(true);
+        muteButton.setVisible(true);
+        textField.setVisible(true);
+        jMute.setVisible(true);
+        timer.stop();
+        timer = null;
+    }
+
+    private void start() {
+        timer = new TimerTracker(this, 250);
+        button.setText("Stop");
+        stopWatchButton.setVisible(false);
     }
 
     public void itemStateChanged(ItemEvent e) {
