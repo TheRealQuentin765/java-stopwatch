@@ -13,7 +13,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     JButton button = new JButton("Timer Start");
     JButton stopWatchButton = new JButton("StopWatch");
     JTextField textField = new JTextField("30");
-    JTextField noteField = new JTextField("Note");
+//    JTextField noteField = new JTextField("Note");
     JCheckBox muteButton = new JCheckBox("Mute");
     JLabel jMute = new JLabel("Mute");
     JProgressBar progressBar = new JProgressBar(0,100);
@@ -27,7 +27,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
         panel.setLayout(null);
 
         frame.setBounds(100,100,200,300);
-        noteField.setBounds(50,0,100,40);
+//        noteField.setBounds(50,0,100,40);
         label.setFont(label.getFont().deriveFont((float)12));
         stopWatchButton.setFont(label.getFont().deriveFont((float)12));
         label.setBounds(50,40,200,40);
@@ -44,7 +44,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
         panel.add(stopWatchButton);
         panel.add(jMute);
         panel.add(label);
-        panel.add(noteField);
+//        panel.add(noteField);
         panel.add(button);
         panel.add(textField);
         panel.add(button);
@@ -52,7 +52,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
 
         muteButton.addItemListener(this);
         button.addActionListener(this);
-        noteField.addActionListener(this);
+//        noteField.addActionListener(this);
         stopWatchButton.addActionListener(this);
 
 
@@ -80,10 +80,10 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     }
 
     public void actionPerformed(ActionEvent e){
-        if(e.getSource() == noteField) {
-            frame.setTitle(noteField.getText());
-            noteField.setVisible(false);
-        }
+//        if(e.getSource() == noteField) {
+//            frame.setTitle(noteField.getText());
+//            noteField.setVisible(false);
+//        }
         if(e.getSource() == stopWatchButton){
             //Stopwatch code goes here
         }
