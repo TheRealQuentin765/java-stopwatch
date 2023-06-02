@@ -9,7 +9,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     JPanel panel = new JPanel();
     JPanel stopPanel = new JPanel();
     JLabel label = new JLabel("Enter time below");
-    JButton button = new JButton("Timer Start");
+    JButton button = new JButton("Start");
     JButton stopWatchButton = new JButton("StopWatch");
     JTextField textField = new JTextField("30");
 //    JTextField noteField = new JTextField("Note");
@@ -17,7 +17,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     JLabel jMute = new JLabel("Mute");
     JProgressBar progressBar = new JProgressBar(0,100);
     JTabbedPane tabbedPane = new JTabbedPane();
-
+    JLabel testLabel = new JLabel("0:0");
     boolean muted = false;
 
     TimerTracker timer;
@@ -25,7 +25,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
 
         panel.setLayout(null);
 
-        frame.setBounds(100,100,200,300);
+        frame.setBounds(100,100,200,250);
 //        noteField.setBounds(50,0,100,40);
         label.setFont(label.getFont().deriveFont((float)12));
         stopWatchButton.setFont(label.getFont().deriveFont((float)12));
@@ -34,13 +34,24 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
         textField.setBounds(20,90,textField.getPreferredSize().width,textField.getPreferredSize().height);
         muteButton.setBounds(20,135,30,20);
         jMute.setBounds(20,120,60,20);
-        stopWatchButton.setBounds(60,130,100,30);
+        stopWatchButton.setBounds(35,70,100,30);
         progressBar.setBounds(25,65,150,10);
+        testLabel.setBounds(45,30,30,30);
+
+        stopPanel.setLayout(null);
+        stopPanel.add(stopWatchButton);
+        stopPanel.add(label);
 
         tabbedPane.add("Timer",panel);
         tabbedPane.add("StopWatch", stopPanel);
+
+        stopPanel.setLayout(null);
+        stopPanel.add(testLabel);
+        stopPanel.add(stopWatchButton);
+        stopPanel.add(label);
+
         panel.add(progressBar);
-        panel.add(stopWatchButton);
+
         panel.add(jMute);
         panel.add(label);
 //        panel.add(noteField);
