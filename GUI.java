@@ -8,6 +8,7 @@ import java.awt.event.ItemListener;
 public class GUI implements ActionListener,TimerOutput,ItemListener{
     JFrame frame = new JFrame("Timer");
     JPanel panel = new JPanel();
+    JPanel stopPanel = new JPanel();
     JLabel label = new JLabel("Enter time below");
     JButton button = new JButton("Timer Start");
     JButton stopWatchButton = new JButton("StopWatch");
@@ -16,6 +17,8 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     JCheckBox muteButton = new JCheckBox("Mute");
     JLabel jMute = new JLabel("Mute");
     JProgressBar progressBar = new JProgressBar(0,100);
+    JTabbedPane tabbedPane = new JTabbedPane();
+
     boolean muted = false;
 
     TimerTracker timer;
@@ -23,7 +26,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
 
         panel.setLayout(null);
 
-        frame.setBounds(100,100,200,200);
+        frame.setBounds(100,100,200,300);
         noteField.setBounds(50,0,100,40);
         label.setFont(label.getFont().deriveFont((float)12));
         stopWatchButton.setFont(label.getFont().deriveFont((float)12));
@@ -35,6 +38,8 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
         stopWatchButton.setBounds(60,130,100,30);
         progressBar.setBounds(25,60,150,40);
 
+        tabbedPane.add("Timer",panel);
+        tabbedPane.add("StopWatch", stopPanel);
         panel.add(progressBar);
         panel.add(stopWatchButton);
         panel.add(jMute);
@@ -52,7 +57,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
 
 
         frame.setResizable(false);
-        frame.setContentPane(panel);
+        frame.setContentPane(tabbedPane);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
