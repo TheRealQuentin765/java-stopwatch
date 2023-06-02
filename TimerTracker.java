@@ -4,9 +4,9 @@ import java.util.TimerTask;
 class TimerTracker {
     private final Timer myTimer = new Timer();
 
-    private TimerOutput output;
+    final private TimerOutput output;
 
-    private int step;
+    final private int step;
     private long time;
     private boolean stop;
 
@@ -17,17 +17,17 @@ class TimerTracker {
 
     public void countUp() {
         stop = false;
-        time = 0;
+        time = step;
+        output.updateStopWatch(0);
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
                 if (stop) {
                     myTimer.cancel();
                     myTimer.purge();
+                    return;
                 }
-                if (time > 0) {
-                    time+=step;
-                }
+                time+=step;
                 output.updateStopWatch(time);
             }
         };
@@ -38,12 +38,14 @@ class TimerTracker {
     public void countDown(long length) {
         stop = false;
         time = length - length%step;
+        output.updateTimer(0,length);
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
                 if (stop) {
                     myTimer.cancel();
                     myTimer.purge();
+                    return;
                 }
                 if (time > 0) {
                     output.updateTimer(time,length);
