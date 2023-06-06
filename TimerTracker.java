@@ -34,7 +34,6 @@ class TimerTracker {
         myTimer.scheduleAtFixedRate(task, step, step);
     }
 
-
     public void countDown(long length) {
         stop = false;
         time = length - length%step;
