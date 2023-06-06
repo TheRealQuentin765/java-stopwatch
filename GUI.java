@@ -21,6 +21,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     boolean muted = false;
 
     TimerTracker timer;
+    TimerTracker stopWatchTimer;
     public void stopWatchGUI(){
 
         panel.setLayout(null);
@@ -91,7 +92,9 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
         progressBar.setValue(100);
         label.setText("BEEP");
         if(!muted) Beeper.beep();
-        end();
+        timerButton.setText("Timer");
+        timer.stop();
+        timer = null;
     }
 
     public void actionPerformed(ActionEvent e){
@@ -99,39 +102,30 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
 //            frame.setTitle(noteField.getText());
 //            noteField.setVisible(false);
          if(e.getSource() == stopWatchButton){
-            if (timer == null) {
-                start();
-                timer.countUp();
-                muteButton.setVisible(false);
-                textField.setVisible(false);
-                jMute.setVisible(false);
-                progressBar.setVisible(false);
+            if (stopWatchTimer == null) {
+                stopWatchTimer = new TimerTracker(this, 100);
+                stopWatchButton.setText("Stop");
+                stopWatchTimer.countUp();
+            } else {
+                stopLabel.setText("Stopped with " + stopWatchTimer.getTime() / 1000. + ".");
+                stopWatchTimer.stop();
+                stopWatchTimer = null;
             }
         } else {
             if (timer == null) {
-                start();
-                progressBar.setVisible(true);
-                timer.countDown((long) (Double.parseDouble(textField.getText()) * 1000));
+                long time = (long) (Double.parseDouble(textField.getText()) * 1000);
+                if (time < 10000)
+                    timer = new TimerTracker(this, 100);
+                else
+                    timer = new TimerTracker(this, 250);
+                timerButton.setText("Stop");
+                timer.countDown(time);
             } else {
                 label.setText("Stopped with " + timer.getTime() / 1000. + ".");
-                end();
+                timer.stop();
+                timer = null;
             }
         }
-    }
-
-    private void end() {
-        timerButton.setText("Timer");
-        stopWatchButton.setVisible(true);
-        muteButton.setVisible(true);
-        textField.setVisible(true);
-        jMute.setVisible(true);
-        timer.stop();
-        timer = null;
-    }
-
-    private void start() {
-        timer = new TimerTracker(this, 250);
-        stopWatchButton.setText("Stop");
     }
 
     public void itemStateChanged(ItemEvent e) {
