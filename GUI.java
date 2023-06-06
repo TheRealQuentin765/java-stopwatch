@@ -9,7 +9,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     JPanel panel = new JPanel();
     JPanel stopPanel = new JPanel();
     JLabel label = new JLabel("Enter time below");
-    JButton button = new JButton("Start");
+    JButton timerButton = new JButton("Start");
     JButton stopWatchButton = new JButton("StopWatch");
     JTextField textField = new JTextField("30");
 //    JTextField noteField = new JTextField("Note");
@@ -17,7 +17,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     JLabel jMute = new JLabel("Mute");
     JProgressBar progressBar = new JProgressBar(0,100);
     JTabbedPane tabbedPane = new JTabbedPane();
-    JLabel testLabel = new JLabel("0:0");
+    JLabel stopLabel = new JLabel("0:0");
     boolean muted = false;
 
     TimerTracker timer;
@@ -30,13 +30,13 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
         label.setFont(label.getFont().deriveFont((float)12));
         stopWatchButton.setFont(label.getFont().deriveFont((float)12));
         label.setBounds(50,40,200,40);
-        button.setBounds(60,90,100,30);
+        timerButton.setBounds(60,90,100,30);
         textField.setBounds(20,90,textField.getPreferredSize().width,textField.getPreferredSize().height);
         muteButton.setBounds(20,135,30,20);
         jMute.setBounds(20,120,60,20);
         stopWatchButton.setBounds(35,70,100,30);
         progressBar.setBounds(25,65,150,10);
-        testLabel.setBounds(45,30,30,30);
+        stopLabel.setBounds(45,30,100,30);
 
         stopPanel.setLayout(null);
         stopPanel.add(stopWatchButton);
@@ -46,7 +46,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
         tabbedPane.add("StopWatch", stopPanel);
 
         stopPanel.setLayout(null);
-        stopPanel.add(testLabel);
+        stopPanel.add(stopLabel);
         stopPanel.add(stopWatchButton);
         stopPanel.add(label);
 
@@ -55,13 +55,13 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
         panel.add(jMute);
         panel.add(label);
 //        panel.add(noteField);
-        panel.add(button);
+        panel.add(timerButton);
         panel.add(textField);
-        panel.add(button);
+        panel.add(timerButton);
         panel.add(muteButton);
 
         muteButton.addItemListener(this);
-        button.addActionListener(this);
+        timerButton.addActionListener(this);
 //        noteField.addActionListener(this);
         stopWatchButton.addActionListener(this);
 
@@ -78,10 +78,13 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     }
 
     public void updateStopWatch(long current) {
-        if (current == 1000)
-            label.setText(current/1000. + " second");
-        else
-            label.setText(current/1000. + " seconds");
+        stopLabel.setText(TimeFormatter.getString(current));
+//        if (current == 1000)
+//            stopLabel.setText(current/1000. + " second");
+//            TimeFormatter.getString(current);
+//        else
+//            stopLabel.setText(current/1000. + " seconds");
+//        TimeFormatter.getString(current);
     }
 
     public void finish() {
@@ -117,7 +120,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     }
 
     private void end() {
-        button.setText("Timer");
+        timerButton.setText("Timer");
         stopWatchButton.setVisible(true);
         muteButton.setVisible(true);
         textField.setVisible(true);
@@ -128,8 +131,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
 
     private void start() {
         timer = new TimerTracker(this, 250);
-        button.setText("Stop");
-        stopWatchButton.setVisible(false);
+        stopWatchButton.setText("Stop");
     }
 
     public void itemStateChanged(ItemEvent e) {
