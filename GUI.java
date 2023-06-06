@@ -91,7 +91,9 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
         progressBar.setValue(100);
         label.setText("BEEP");
         if(!muted) Beeper.beep();
-        end();
+        timerButton.setText("Timer");
+        timer.stop();
+        timer = null;
     }
 
     public void actionPerformed(ActionEvent e){
@@ -101,16 +103,16 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
          if(e.getSource() == stopWatchButton){
             if (timer == null) {
                 start();
+                stopWatchButton.setText("Stop");
                 timer.countUp();
-                muteButton.setVisible(false);
-                textField.setVisible(false);
-                jMute.setVisible(false);
-                progressBar.setVisible(false);
+            } else {
+                stopLabel.setText("Stopped with " + timer.getTime() / 1000. + ".");
+                end();
             }
         } else {
             if (timer == null) {
                 start();
-                progressBar.setVisible(true);
+                timerButton.setText("Stop");
                 timer.countDown((long) (Double.parseDouble(textField.getText()) * 1000));
             } else {
                 label.setText("Stopped with " + timer.getTime() / 1000. + ".");
@@ -130,8 +132,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     }
 
     private void start() {
-        timer = new TimerTracker(this, 250);
-        stopWatchButton.setText("Stop");
+        timer = new TimerTracker(this, 125);
     }
 
     public void itemStateChanged(ItemEvent e) {
