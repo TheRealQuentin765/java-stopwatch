@@ -21,11 +21,11 @@ public class TimeFormatter {
         int hour = getHour(val);
         if (hour != 0) result += hour + "h ";
         int min = getMin(val);
-        if (min != 0) result += min + "min ";
+        if (min != 0) result += min + ":";
         int sec = getSec(val);
-        if (sec != 0) result += sec + "sec ";
+        if (sec != 0) result += sec + ".";
         int mil = getMil(val);
-        if (mil != 0) result += mil + "ms ";
+        if (mil != 0) result += mil + " ";
 
         int length = result.length();
         if (length == 0)
