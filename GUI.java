@@ -19,6 +19,9 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     JTabbedPane tabbedPane = new JTabbedPane();
     JLabel stopLabel = new JLabel("0:0");
     boolean muted = false;
+    boolean timerButtonStop = false;
+
+    boolean stopWatchButtonStop = false;
 
     TimerTracker timer;
     TimerTracker stopWatchTimer;
@@ -30,14 +33,14 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
 //        noteField.setBounds(50,0,100,40);
         label.setFont(label.getFont().deriveFont((float)12));
         stopWatchButton.setFont(label.getFont().deriveFont((float)12));
-        label.setBounds(50,40,200,40);
+        label.setBounds(50,30,200,40);
         timerButton.setBounds(60,90,100,30);
         textField.setBounds(20,90,textField.getPreferredSize().width,textField.getPreferredSize().height);
         muteButton.setBounds(20,135,30,20);
         jMute.setBounds(20,120,60,20);
         stopWatchButton.setBounds(35,70,100,30);
         progressBar.setBounds(25,65,150,10);
-        stopLabel.setBounds(45,30,100,30);
+        stopLabel.setBounds(20,30,150,30);
 
         stopPanel.setLayout(null);
         stopPanel.add(stopWatchButton);
@@ -109,6 +112,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
             } else {
                 stopLabel.setText("Stopped with " + stopWatchTimer.getTime() / 1000. + ".");
                 stopWatchTimer.stop();
+                stopWatchButton.setText("Start");
                 stopWatchTimer = null;
             }
         } else {
@@ -122,6 +126,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
                 timer.countDown(time);
             } else {
                 label.setText("Stopped with " + timer.getTime() / 1000. + ".");
+                timerButton.setText("Start");
                 timer.stop();
                 timer = null;
             }
