@@ -36,15 +36,15 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
 //        noteField.setBounds(50,0,100,40);
         label.setFont(label.getFont().deriveFont((float)12));
         stopWatchButton.setFont(label.getFont().deriveFont((float)12));
-        label.setBounds(50,30,200,40);
+        label.setBounds(40,30,200,40);
         timerButton.setBounds(0,135,100,30);
-        textField.setBounds(100,90,30,30);
-        minutesField.setBounds(60,90,30,30);
-        hoursField.setBounds(40,90,30,30);
+        textField.setBounds(100,80,30,30);
+        minutesField.setBounds(60,80,30,30);
+        hoursField.setBounds(20,80,30,30);
         muteButton.setBounds(100,135,30,20);
         jMute.setBounds(100,120,60,20);
         stopWatchButton.setBounds(35,70,100,30);
-        progressBar.setBounds(25,65,150,10);
+        progressBar.setBounds(20,65,150,10);
         stopLabel.setBounds(20,30,150,30);
 
         stopPanel.setLayout(null);
@@ -83,7 +83,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     }
     public void updateTimer(long current, long length) {
 //        label.setText()
-        label.setText(current/1000. + " / " + length/1000. + "  (" + (int)(100 - 100. * current / length) + "%)");
+        label.setText(TimeFormatter.getString(current) + " (" + (int)(100 - 100. * current / length) + "%)");
         progressBar.setValue((int)(100 - 100. * current / length));
     }
 
@@ -107,7 +107,15 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     }
 
     public void actionPerformed(ActionEvent e){
-
+        if (textField.getText().equals("s")){
+            textField.setText("0");
+        }
+        if (minutesField.getText().equals("m")){
+            minutesField.setText("0");
+        }
+        if (hoursField.getText().equals("h")){
+            hoursField.setText("0");
+        }
          if(e.getSource() == stopWatchButton){
             if (stopWatchTimer == null) {
                 stopWatchTimer = new TimerTracker(this, 100);
@@ -129,7 +137,7 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
                 timerButton.setText("Stop");
                 timer.countDown(time);
             } else {
-                label.setText("Stopped with " + timer.getTime() / 1000. + ".");
+                label.setText("Stopped with " + TimeFormatter.getString(timer.getTime()) + ".");
                 timerButton.setText("Start");
                 timer.stop();
                 timer = null;
