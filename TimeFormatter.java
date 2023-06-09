@@ -25,7 +25,10 @@ public class TimeFormatter {
         int sec = getSec(val);
         if (sec != 0) result += sec + ".";
         int mil = getMil(val);
-        if (mil != 0) result += mil + " ";
+        if (mil == 0){
+            result += "00";
+        }
+        result += mil + " ";
 
         int length = result.length();
         if (length == 0)
