@@ -12,20 +12,14 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     JButton timerButton = new JButton("Start");
     JButton stopWatchButton = new JButton("StopWatch");
     JTextField textField = new JTextField("s");
-
     JTextField minutesField = new JTextField("m");
     JTextField hoursField = new JTextField("h");
-//    JTextField noteField = new JTextField("Note");
     JCheckBox muteButton = new JCheckBox("Mute");
     JLabel jMute = new JLabel("Mute");
     JProgressBar progressBar = new JProgressBar(0,100);
     JTabbedPane tabbedPane = new JTabbedPane();
     JLabel stopLabel = new JLabel("0:0");
     boolean muted = false;
-    boolean timerButtonStop = false;
-
-    boolean stopWatchButtonStop = false;
-
     TimerTracker timer;
     TimerTracker stopWatchTimer;
     public void stopWatchGUI(){
@@ -33,7 +27,6 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
         panel.setLayout(null);
 
         frame.setBounds(100,100,200,250);
-//        noteField.setBounds(50,0,100,40);
         label.setFont(label.getFont().deriveFont((float)12));
         stopWatchButton.setFont(label.getFont().deriveFont((float)12));
         label.setBounds(40,30,200,40);
@@ -47,13 +40,12 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
         progressBar.setBounds(20,65,150,10);
         stopLabel.setBounds(20,30,150,30);
 
-        stopPanel.setLayout(null);
-        stopPanel.add(stopWatchButton);
-        stopPanel.add(label);
-
         tabbedPane.add("Timer",panel);
         tabbedPane.add("StopWatch", stopPanel);
 
+        stopPanel.setLayout(null);
+        stopPanel.add(stopWatchButton);
+        stopPanel.add(label);
         stopPanel.setLayout(null);
         stopPanel.add(stopLabel);
         stopPanel.add(stopWatchButton);
@@ -71,7 +63,6 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
 
         muteButton.addItemListener(this);
         timerButton.addActionListener(this);
-//        noteField.addActionListener(this);
         stopWatchButton.addActionListener(this);
 
 
@@ -82,19 +73,12 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
 
     }
     public void updateTimer(long current, long length) {
-//        label.setText()
         label.setText(TimeFormatter.getString(current) + " (" + (int)(100 - 100. * current / length) + "%)");
         progressBar.setValue((int)(100 - 100. * current / length));
     }
 
     public void updateStopWatch(long current) {
         stopLabel.setText(TimeFormatter.getString(current));
-//        if (current == 1000)
-//            stopLabel.setText(current/1000. + " second");
-//            TimeFormatter.getString(current);
-//        else
-//            stopLabel.setText(current/1000. + " seconds");
-//        TimeFormatter.getString(current);
     }
 
     public void finish() {
@@ -107,15 +91,25 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     }
 
     public void actionPerformed(ActionEvent e){
-        if (textField.getText().equals("s")){
+        try {
+            double parsedValue = Double.parseDouble(textField.getText());
+            textField.setText(String.valueOf((int)parsedValue));
+        } catch (NumberFormatException ex) {
             textField.setText("0");
         }
-        if (minutesField.getText().equals("m")){
+        try {
+            double parsedValue = Double.parseDouble(minutesField.getText());
+            minutesField.setText(String.valueOf((int)parsedValue));
+        } catch (NumberFormatException ex) {
             minutesField.setText("0");
         }
-        if (hoursField.getText().equals("h")){
+        try {
+            double parsedValue = Double.parseDouble(hoursField.getText());
+            hoursField.setText(String.valueOf((int)parsedValue));
+        } catch (NumberFormatException ex) {
             hoursField.setText("0");
         }
+
          if(e.getSource() == stopWatchButton){
             if (stopWatchTimer == null) {
                 stopWatchTimer = new TimerTracker(this, 100);
