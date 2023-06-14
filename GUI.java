@@ -91,15 +91,25 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
     }
 
     public void actionPerformed(ActionEvent e){
-        if (textField.getText().equals("s")){
+        try {
+            int parsedValue = Integer.parseInt(textField.getText());
+            textField.setText(String.valueOf(parsedValue));
+        } catch (NumberFormatException ex) {
             textField.setText("0");
         }
-        if (minutesField.getText().equals("m")){
+        try {
+            int parsedValue = Integer.parseInt(minutesField.getText());
+            minutesField.setText(String.valueOf(parsedValue));
+        } catch (NumberFormatException ex) {
             minutesField.setText("0");
         }
-        if (hoursField.getText().equals("h")){
+        try {
+            int parsedValue = Integer.parseInt(hoursField.getText());
+            hoursField.setText(String.valueOf(parsedValue));
+        } catch (NumberFormatException ex) {
             hoursField.setText("0");
         }
+
          if(e.getSource() == stopWatchButton){
             if (stopWatchTimer == null) {
                 stopWatchTimer = new TimerTracker(this, 100);
