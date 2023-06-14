@@ -92,20 +92,20 @@ public class GUI implements ActionListener,TimerOutput,ItemListener{
 
     public void actionPerformed(ActionEvent e){
         try {
-            int parsedValue = Integer.parseInt(textField.getText());
-            textField.setText(String.valueOf(parsedValue));
+            double parsedValue = Double.parseDouble(textField.getText());
+            textField.setText(String.valueOf((int)parsedValue));
         } catch (NumberFormatException ex) {
             textField.setText("0");
         }
         try {
-            int parsedValue = Integer.parseInt(minutesField.getText());
-            minutesField.setText(String.valueOf(parsedValue));
+            double parsedValue = Double.parseDouble(minutesField.getText());
+            minutesField.setText(String.valueOf((int)parsedValue));
         } catch (NumberFormatException ex) {
             minutesField.setText("0");
         }
         try {
-            int parsedValue = Integer.parseInt(hoursField.getText());
-            hoursField.setText(String.valueOf(parsedValue));
+            double parsedValue = Double.parseDouble(hoursField.getText());
+            hoursField.setText(String.valueOf((int)parsedValue));
         } catch (NumberFormatException ex) {
             hoursField.setText("0");
         }
